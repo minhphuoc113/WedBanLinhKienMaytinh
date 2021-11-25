@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WedBanLinhKienDienTu.Models.Dao;
+using WedBanLinhKienDienTu.Models.EF;
 
 namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
 {
@@ -12,6 +14,21 @@ namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(User model)
+        {
+            var result = new UserDb().Login(model.UserName, model.Password);
+            if (result && ModelState.IsValid)
+            {
+                return RedirectToAction("index", "Home", new { area = "admin" });
+            }
+            else
+            {
+                ModelState.AddModelError("", "Login that bai ");
+            }
+            return View(model);
         }
 
         // GET: Admin/Login/Details/5
