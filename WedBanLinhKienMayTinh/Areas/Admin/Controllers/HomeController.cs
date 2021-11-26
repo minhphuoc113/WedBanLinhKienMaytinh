@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
 {
-    public class HmController : Controller
+    public class HomeController : Controller
     {
         // GET: Admin/Hm
         public ActionResult Index()
