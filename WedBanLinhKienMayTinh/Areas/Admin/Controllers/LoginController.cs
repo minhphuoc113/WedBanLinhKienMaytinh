@@ -3,87 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WedBanLinhKienDienTu.Models.Dao;
+using WedBanLinhKienMayTinh.Areas.Admin.Code;
+using WedBanLinhKienMayTinh.Areas.Admin.Models;
 
 namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
 {
     public class LoginController : Controller
     {
         // GET: Admin/Login
+        [HttpGet ]
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Admin/Login/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Admin/Login/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/Login/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(LoginModel model)
         {
-            try
+            var result = new AccountDao().CheckLogin(model.UserName, model.PassWord);
+            if(result && ModelState.IsValid )
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                SessionHelper.SetSession(new UserSession() { UserName = model.UserName });
+                return RedirectToAction("Index", "Home");
             }
-            catch
+            else
             {
-                return View();
+                ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");
             }
-        }
-
-        // GET: Admin/Login/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Login/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Admin/Login/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Login/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
     }
 }

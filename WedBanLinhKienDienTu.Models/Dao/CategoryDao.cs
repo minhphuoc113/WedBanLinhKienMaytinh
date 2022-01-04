@@ -8,7 +8,7 @@ using WedBanLinhKienDienTu.Models.EF;
 
 namespace WedBanLinhKienDienTu.Models.Dao
 {
-  public  class CategoryDao
+    public class CategoryDao
     {
         WebBanLinhKienMayTinhDbContext context;
 
@@ -44,7 +44,7 @@ namespace WedBanLinhKienDienTu.Models.Dao
                 new SqlParameter("@ParentID", category.ParentID),
                 new SqlParameter("@DisplayOrder", category.DisplayOrder),
             };
-            var reustl = context.Database.ExecuteSqlCommand ("PSP_Category_InsertAndUpdate @ID,@Name,@MetaTitle,@ParentID,@DisplayOrder",  param);
+            var reustl = context.Database.ExecuteSqlCommand("PSP_Category_InsertAndUpdate @ID,@Name,@MetaTitle,@ParentID,@DisplayOrder", param);
             return reustl;
         }
         public int UpdateCategory(Category category)
@@ -60,12 +60,12 @@ namespace WedBanLinhKienDienTu.Models.Dao
             var reustl = context.Database.ExecuteSqlCommand("PSP_Category_InsertAndUpdate @ID,@Name,@MetaTitle,@ParentID,@DisplayOrder", param);
             return reustl;
         }
-        public int Delete (Category category)
+        public int Delete(Category category)
         {
             SqlParameter[] param = new SqlParameter[]
             {
                 new SqlParameter("@ID", category.ID),
-                
+
             };
             var reustl = context.Database.ExecuteSqlCommand("PSP_Category_Delete @ID", param);
             return reustl;
