@@ -147,6 +147,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Ad\css\all.min.css" />
     <Content Include="Assets\Ad\css\sb-admin-2.css" />
     <Content Include="Assets\Ad\css\sb-admin-2.min.css" />
     <Content Include="Assets\Ad\img\undraw_posting_photo.svg" />
@@ -2046,6 +2047,14 @@
     <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
+    <Content Include="Assets\Ad\webfonts\fa-brands-400.ttf" />
+    <Content Include="Assets\Ad\webfonts\fa-brands-400.woff2" />
+    <Content Include="Assets\Ad\webfonts\fa-regular-400.ttf" />
+    <Content Include="Assets\Ad\webfonts\fa-regular-400.woff2" />
+    <Content Include="Assets\Ad\webfonts\fa-solid-900.ttf" />
+    <Content Include="Assets\Ad\webfonts\fa-solid-900.woff2" />
+    <Content Include="Assets\Ad\webfonts\fa-v4compatibility.ttf" />
+    <Content Include="Assets\Ad\webfonts\fa-v4compatibility.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
