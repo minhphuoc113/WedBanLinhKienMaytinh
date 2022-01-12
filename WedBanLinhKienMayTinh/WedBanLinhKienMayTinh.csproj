@@ -137,17 +137,19 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Library\XMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Ad\css\all.min.css" />
+    <Content Include="Assets\Ad\css\jquery.dataTables.min.css" />
     <Content Include="Assets\Ad\css\sb-admin-2.css" />
     <Content Include="Assets\Ad\css\sb-admin-2.min.css" />
     <Content Include="Assets\Ad\img\undraw_posting_photo.svg" />
@@ -160,6 +162,7 @@
     <Content Include="Assets\Ad\js\demo\chart-bar-demo.js" />
     <Content Include="Assets\Ad\js\demo\chart-pie-demo.js" />
     <Content Include="Assets\Ad\js\demo\datatables-demo.js" />
+    <Content Include="Assets\Ad\js\jquery.dataTables.min.js" />
     <Content Include="Assets\Ad\js\sb-admin-2.js" />
     <Content Include="Assets\Ad\js\sb-admin-2.min.js" />
     <Content Include="Assets\Ad\vendor\bootstrap\js\bootstrap.bundle.js" />
@@ -2021,10 +2024,6 @@
     <Content Include="Areas\Admin\Views\Menu\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Menu\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Menu\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Details.cshtml" />
@@ -2055,6 +2054,12 @@
     <Content Include="Assets\Ad\webfonts\fa-solid-900.woff2" />
     <Content Include="Assets\Ad\webfonts\fa-v4compatibility.ttf" />
     <Content Include="Assets\Ad\webfonts\fa-v4compatibility.woff2" />
+    <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Message.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

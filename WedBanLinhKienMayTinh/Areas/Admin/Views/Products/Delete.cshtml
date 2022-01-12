@@ -1,0 +1,60 @@
+﻿@model WedBanLinhKienDienTu.Models.EF.Product
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <strong class="text-uppercase text-success"> Xóa sản phẩm</strong>
+            </div>
+            <div class="col-md-6 text-right">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <button class="btn btn-sm btn-success" type="submit" value="Delete"><i class="fas fa-trash"></i>Xóa</button>
+                    <a href="@Url.Action("Index", "Products")" class="btn btn-sm btn-danger">
+                        <i class="fas fa-long-arrow-alt-left"></i>Quay về
+                    </a>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body my-3">
+    <table class="table table-bordered">
+        <tr>
+            <th style="width:120px">Tên sản phẩm</th>
+            <th>Nội dung</th>
+        </tr>
+        <tr>
+
+            <td> @Html.DisplayNameFor(model => model.ID)</td>
+            <td> @Html.DisplayFor(model => model.ID)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.Name) </td>
+            <td> @Html.DisplayFor(model => model.Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.MetaTitle)</td>
+            <td> @Html.DisplayFor(model => model.MetaTitle)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.CreatedBy)</td>
+            <td> @Html.DisplayFor(model => model.CreatedBy)</td>
+        </tr>
+
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.Status)</td>
+            <td> @Html.DisplayFor(model => model.Status)</td>
+        </tr>
+    </table>
+
+</div>

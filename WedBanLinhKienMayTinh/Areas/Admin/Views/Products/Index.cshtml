@@ -1,0 +1,93 @@
+﻿@model IEnumerable<WedBanLinhKienDienTu.Models.EF.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+
+    <link href="~/Assets/Ad/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+@section footer {
+
+    <script src="~/Assets/Ad/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <strong class="text-uppercase text-danger">Danh sách sản phẩm</strong>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="@Url.Action("Create","Products")" class="btn btn-sm btn-success">
+                    <i class="fas fa-plus"></i>Thêm
+                </a>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-3">
+        @Html.Partial("Message")
+        <table class="table table-bordered table-striped" id="myTable">
+            <thead>
+                <tr>
+                    <th style="width:20px" class="text-center">#</th>
+                    <th style="width:100px" class="text-center"> Hình </th>
+                    <th style="width:100px" class="text-center">Tên sản phẩm</th>
+                    <th style="width:100px" class="text-center">Mô tả</th>
+                    <th style="width:100px" class="text-center">Người đăng</th>
+                    <th style="width:100px" class="text-center">Chức năng</th>
+                    <th style="width:20px" class="text-center">ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <input name="checkId" type="checkbox" />
+                        </td>
+                        <td>
+                            <img src="~/Assets/Ad/img/Product/@item.Image" alt="TenHinh" class="img-fluid" />
+                        </td>
+                        <td>@item.Name</td>
+                        <td>@item.MetaTitle</td>
+                        <td>@item.CreatedBy</td>
+                        <td class="text-center">
+                            @if (item.Status != true)
+                            {
+                                <a href="@Url.Action("Status","Product", new {@id=item.ID })" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-toggle-off"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Status","Product", new {@id=item.ID })" class="btn btn-sm btn-success">
+                                    <i class="fas fa-toggle-on"></i>
+                                </a>
+                            }
+
+
+                            <a href="@Url.Action("Edit","Products", new {@id=item.ID })" class="btn btn-sm btn-info" />
+                            <i class="fas fa-edit"></i>
+                            <a href="@Url.Action("Details","Products", new {@id=item.ID })" class="btn btn-sm btn-success" />
+                            <i class="fas fa-eye"></i>
+                            <a href="@Url.Action("Delete","Products", new {@id=item.ID })" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">@item.ID</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
