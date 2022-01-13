@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,84 +10,58 @@ namespace WedBanLinhKienDienTu.Models.Dao
 {
     public class AboutDao
     {
-        WebBanLinhKienMayTinhDbContext context;
+        private WebBanLinhKienMayTinhDbContext db = new WebBanLinhKienMayTinhDbContext();
 
-        public AboutDao()
+        public List<About> getList(string status = "All")
         {
-            context = new WebBanLinhKienMayTinhDbContext();
-        }
-        public IEnumerable<About> GetAbouts(long id)
-        {
-            SqlParameter[] param = new SqlParameter[]
+            List<About> list = null;
+            switch (status)
             {
-                 new SqlParameter("@ID", id)
-            };
-            var Reustl = context.Database.SqlQuery<About>("PSP_About_Select @ID", param).ToList();
-            return Reustl;
-        }
+                case "Index":
+                    {
+                        list = db.Abouts.Where(m => m.Status != null).ToList();
+                        break;
+                    }
+                case "Trash":
+                    {
+                        list = db.Abouts.Where(m => m.Status != null).ToList();
+                        break;
+                    }
+                default:
+                    {
+                        list = db.Abouts.ToList();
+                        break;
+                    }
+            }
 
-
-
-        public About GetAboutByID(long id)
-        {
-            SqlParameter[] param = new SqlParameter[]
-            {
-                 new SqlParameter("@ID", id)
-            };
-            var Reustl = context.Database.SqlQuery<About>("PSP_About_Select @ID", param).SingleOrDefault();
-            return Reustl;
+            return list;
         }
-        public int InsertAbout(About about)
+        public About getRow(long? id)
         {
-            SqlParameter[] param = new SqlParameter[]
+            if (id == null)
             {
-                new SqlParameter("@ID", about.ID),
-                new SqlParameter("@Name", about.Name),
-                new SqlParameter("MetaTitle", about.MetaTitle),
-                new SqlParameter("@Description", about.Description),
-                new SqlParameter("@Image", about.Image),
-                new SqlParameter("@Detail", about.Detail),
-                new SqlParameter("@CreatedDate", about.CreatedDate),
-                new SqlParameter("@CreatedBy", about.CreatedBy),
-                new SqlParameter("@ModifiedDate", about.CreatedDate),
-                new SqlParameter("@ModifiedBy", about.CreatedBy),
-                new SqlParameter("@MetaKeywords", about.MetaKeywords),
-                new SqlParameter("@MetaDescriptions", about.MetaDescriptions),
-                new SqlParameter("@Status ", about.Status),
-            };
-            var reustl = context.Database.ExecuteSqlCommand("PSP_About_InsertAndUpdate @ID, @Name, @MetaTitle, @Description, @Image, @Detail, @CreatedDate, @CreatedBy, @ModifiedDate, @ModifiedBy, @MetaKeywords, @MetaDescriptions, @Status", param);
-            return reustl;
+                return null;
+            }
+            else
+            {
+                return db.Abouts.Find(id);
+            }
         }
-        public int UpdateAbout(About about)
+        public int Insert(About row)
         {
-            SqlParameter[] param = new SqlParameter[]
-            {
-                new SqlParameter("@ID", about.ID),
-                new SqlParameter("@Name", about.Name),
-                new SqlParameter("MetaTitle", about.MetaTitle),
-                new SqlParameter("@Description", about.Description),
-                new SqlParameter("@Image", about.Image),
-                new SqlParameter("@Detail", about.Detail),
-                new SqlParameter("@CreatedDate", about.CreatedDate),
-                new SqlParameter("@CreatedBy", about.CreatedBy),
-                new SqlParameter("@ModifiedDate", about.CreatedDate),
-                new SqlParameter("@ModifiedBy", about.CreatedBy),
-                new SqlParameter("@MetaKeywords", about.MetaKeywords),
-                new SqlParameter("@MetaDescriptions", about.MetaDescriptions),
-                new SqlParameter("@Status ", about.Status),
-            };
-            var reustl = context.Database.ExecuteSqlCommand("PSP_About_InsertAndUpdate @ID, @Name, @MetaTitle, @Description, @Image, @Detail, @CreatedDate, @CreatedBy, @ModifiedDate, @ModifiedBy, @MetaKeywords, @MetaDescriptions, @Status", param);
-            return reustl;
+            db.Abouts.Add(row);
+            return db.SaveChanges();
         }
-        public int Delete(About about)
+        public int Update(About row)
         {
-            SqlParameter[] param = new SqlParameter[]
-            {
-                 new SqlParameter("@ID", about.ID),
-            };
-            var reustl = context.Database.ExecuteSqlCommand("PSP_About_Delete @ID", param);
-            return reustl;
+            db.Entry(row).State = EntityState.Modified;
+            return db.SaveChanges();
         }
-
+        public int Delete(About row)
+        {
+            db.Abouts.Remove(row);
+            return db.SaveChanges();
+        }
     }
+
 }
