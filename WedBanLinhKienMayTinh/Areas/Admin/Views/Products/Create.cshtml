@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-6">
 
-                    <strong class="text-uppercase text-danger">Thêm loại sản phẩm</strong>
+                    <strong class="text-uppercase text-danger">Thêm sản phẩm</strong>
                 </div>
                 <div class="col-md-6 text-right">
                     <button class="btn btn-sm btn-success" type="submit" value="Create"><i class="fas-fa-save"></i>Lưu</button>
@@ -54,14 +54,10 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Hình ảnh</label>
-                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
-                    </div>
+                    
 
                     <div class="form-group">
-                        <label>Ngày đăng</label>
+                        <label>Người đăng</label>
                         @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
                     </div>
