@@ -4,10 +4,22 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+@section header {
+
+    <link href="~/Assets/Ad/css/jquery.dataTables.min.css" rel="stylesheet" />
 }
+
+@section footer {
+
+    <script src="~/Assets/Ad/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+
 <div class="card">
     <div class="card-header">
         <div class="row">
@@ -18,14 +30,15 @@
                 <a href="@Url.Action("Create","Categories")" class="btn btn-sm btn-success">
                     <i class="fas fa-plus"></i>Thêm
                 </a>
-                <a href="@Url.Action("Trash","Categories")" class="btn btn-sm btn-success">
-                    <i class="fas fa-trash"></i> Thùng rác
-                </a>
+
+
+
             </div>
         </div>
     </div>
     <div class="card-body p-3">
-        <table class="table table-bordered table-hover">
+        @Html.Partial("Message")
+        <table class="table table-bordered table-striped" id="myTable">
             <thead>
                 <tr>
                     <th style="width:20px" class="text-center">#</th>
@@ -49,6 +62,19 @@
                             </a>
                         </td>
                         <td class="text-center">
+                            @if (item.Status != true)
+                            {
+                                <a href="@Url.Action("Status","Category", new {@id=item.ID })" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-toggle-off"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Status","Category", new {@id=item.ID })" class="btn btn-sm btn-success">
+                                    <i class="fas fa-toggle-on"></i>
+                                </a>
+                            }
+
 
                             <a href="@Url.Action("Edit","Categories", new {@id=item.ID })" class="btn btn-sm btn-info" />
                             <i class="fas fa-edit"></i>
