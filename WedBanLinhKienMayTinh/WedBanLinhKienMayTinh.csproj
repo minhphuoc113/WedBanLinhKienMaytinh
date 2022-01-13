@@ -2020,10 +2020,6 @@
     <Content Include="Assets\Ad\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Assets\Ad\vendor\jquery\jquery.min.map" />
     <Content Include="Assets\Ad\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Menu\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Menu\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Menu\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Details.cshtml" />
@@ -2060,6 +2056,7 @@
     <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\Message.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

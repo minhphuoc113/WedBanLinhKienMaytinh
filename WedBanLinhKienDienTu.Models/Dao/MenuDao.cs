@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,72 +10,57 @@ namespace WedBanLinhKienDienTu.Models.Dao
 {
     public class MenuDao
     {
-        WebBanLinhKienMayTinhDbContext context;
+        private WebBanLinhKienMayTinhDbContext db = new WebBanLinhKienMayTinhDbContext();
 
-        public MenuDao()
+        public List<Menu> getList(string status = "All")
         {
-            context = new WebBanLinhKienMayTinhDbContext();
-        }
-        public IEnumerable<Menu> GetMenus(long id)
-        {
-            SqlParameter[] param = new SqlParameter[]
+            List<Menu> list = null;
+            switch (status)
             {
-                new SqlParameter("@ID",id)
-            };
-            var reustl = context.Database.SqlQuery<Menu>("PSP_Menu_Select @ID", param).ToList();
-            return reustl;
-        }
-        public Menu GetMenuByID(long id)
-        {
-            SqlParameter[] param = new SqlParameter[]
-            {
-                new SqlParameter("@ID",id)
-            };
-            var reustl = context.Database.SqlQuery<Menu>("PSP_Menu_Select @ID", param).SingleOrDefault();
-            return reustl;
-        }
-        public int InsertMenu(Menu menu)
-        {
-            SqlParameter[] param = new SqlParameter[]
-            {
-                new SqlParameter("@ID", menu.ID),
-                new SqlParameter("@Text", menu.Text),
-                new SqlParameter("@Link", menu.Link),
-                new SqlParameter("@DisplayOrder", menu.DisplayOrder),
-                new SqlParameter("@Target", menu.Target),
-                new SqlParameter("@Status", menu.Status),
-                new SqlParameter("@TypeID", menu.TypeID),
+                case "Index":
+                    {
+                        list = db.Menus.Where(m => m.Status != null).ToList();
+                        break;
+                    }
+                case "Trash":
+                    {
+                        list = db.Menus.Where(m => m.Status != null).ToList();
+                        break;
+                    }
+                default:
+                    {
+                        list = db.Menus.ToList();
+                        break;
+                    }
+            }
 
-            };
-            var reustl = context.Database.ExecuteSqlCommand("PSP_Menu_InsertAndUpdate @ID,@Text,@Link,@DisplayOrder,@Target,@Status,@TypeID", param);
-            return reustl;
+            return list;
         }
-        public int UpdatetMenu(Menu menu)
+        public Menu getRow(long? id)
         {
-            SqlParameter[] param = new SqlParameter[]
+            if (id == null)
             {
-                new SqlParameter("@ID", menu.ID),
-                new SqlParameter("@Text", menu.Text),
-                new SqlParameter("@Link", menu.Link),
-                new SqlParameter("@DisplayOrder", menu.DisplayOrder),
-                new SqlParameter("@Target", menu.Target),
-                new SqlParameter("@Status", menu.Status),
-                new SqlParameter("@TypeID", menu.TypeID),
-
-            };
-            var reustl = context.Database.ExecuteSqlCommand("PSP_Menu_InsertAndUpdate @ID,@Text,@Link,@DisplayOrder,@Target,@Status,@TypeID", param);
-            return reustl;
+                return null;
+            }
+            else
+            {
+                return db.Menus.Find(id);
+            }
         }
-        public int DeleteMenu(Menu menu)
+        public int Insert(Menu row)
         {
-            SqlParameter[] param = new SqlParameter[]
-            {
-                new SqlParameter("@ID", menu.ID),
-
-            };
-            var reustl = context.Database.ExecuteSqlCommand("PSP_Menu_InsertAndUpdate @ID", param);
-            return reustl;
+            db.Menus.Add(row);
+            return db.SaveChanges();
         }
-
+        public int Update(Menu row)
+        {
+            db.Entry(row).State = EntityState.Modified;
+            return db.SaveChanges();
+        }
+        public int Delete(Menu row)
+        {
+            db.Menus.Remove(row);
+            return db.SaveChanges();
+        }
     }
 }
