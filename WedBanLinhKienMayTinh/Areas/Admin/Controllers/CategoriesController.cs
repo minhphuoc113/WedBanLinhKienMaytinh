@@ -6,18 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WedBanLinhKienDienTu.Models.Dao;
 using WedBanLinhKienDienTu.Models.EF;
+using WedBanLinhKienMayTinh.Library;
 
 namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
 {
     public class CategoriesController : Controller
     {
+        CategoryDao categoryDao = new CategoryDao();
         private WebBanLinhKienMayTinhDbContext db = new WebBanLinhKienMayTinhDbContext();
 
         // GET: Admin/Categories
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            var list = db.Categories.Where(m => m.Status != null).OrderByDescending(m => m.CreatedBy).ToList();
+            return View(categoryDao.getList("Index"));
         }
 
         // GET: Admin/Categories/Details/5
@@ -27,7 +31,7 @@ namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+            Category category = categoryDao.getRow(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -38,6 +42,8 @@ namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
         // GET: Admin/Categories/Create
         public ActionResult Create()
         {
+            ViewBag.ListCat = new SelectList(categoryDao.getList("Index"), "ID", "Name");
+
             return View();
         }
 
@@ -50,8 +56,8 @@ namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
+                categoryDao.Insert(category);
+                TempData["message"] = new XMessage("success", "Thêm thành công");
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +71,7 @@ namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+            Category category = categoryDao.getRow(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -82,8 +88,7 @@ namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                categoryDao.Update(category);
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -96,7 +101,8 @@ namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+            Category category = categoryDao.getRow(id);
+            TempData["message"] = new XMessage("success", "Xóa thành công");
             if (category == null)
             {
                 return HttpNotFound();
@@ -109,19 +115,21 @@ namespace WedBanLinhKienMayTinh.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
+            Category category = categoryDao.getRow(id);
+            categoryDao.Delete(category);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        public ActionResult Status(bool? id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            Category category = db.Categories.Find(id);
+            bool? status = (category.Status == true);
+            category.Status = status;
+            category.CreatedBy = null;
+            category.CreatedDate = DateTime.Now;
+            db.Entry(category).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
